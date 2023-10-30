@@ -83,6 +83,7 @@ lmleb_dat <- apply(dat,1,function(x){
 })
 
 # plot
+pdf("plots/nejm-eb-comp.pdf", width = 6, height = 6)
 
 cols <- brewer.pal(3, 'Set1')
 cols[3] <- rgb(255/255,140/255,0,1)
@@ -98,8 +99,7 @@ ylim <- range(c(bfdep_dat, bfdir_dat,bfeb_dat))
 # ylim <- range(c(bfindep_dat,bfdep_dat, bfdir_dat,bfeb_dat))
 plot(1:nrow(dat), bfdep_dat,
      col = cols[2],
-     pch = 20, 
-     cex = 1.5,
+     pch = 20, axes = FALSE, cex = 1.5,
      xlab = "Study ID",
      ylab = "",
      # ylim = ylim,
@@ -108,6 +108,7 @@ plot(1:nrow(dat), bfdep_dat,
      font.main = 1,
      cex.main = cex.main, cex.lab = cex.lab)
 axis(1, cex.axis = cex.axis, at = c(1, seq(5, 35, 5), 39))
+axis(2, las = 2, cex.axis = cex.axis, at = c(1,3,10,20))
 mtext(text = "Evidence for H0", side = 2, line = 2.5, cex = cex.lab)
 # points(bfindep_dat, pch = 18, cex = 1.4, col = cols[1])
 points(bfdir_dat, pch = 17, cex = 1.2, col = cols[3])
@@ -133,7 +134,8 @@ points(lmleb_dat, pch = 17, cex = 1.2, col = cols[4])
 legend("bottomright",
        col = cols[c(2,3,4)],
        pch = c(20, 17,17),
-       legend = c("LT", "GD",'GD-EB'),
+       legend = c("LT", "BREASE",'BREASE-EB'),
        horiz = F, bty = "n",
        cex= cex.main)
 
+dev.off()

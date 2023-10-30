@@ -7,6 +7,9 @@ source('functions/lt_func.R')
 
 dat <- read.csv('data/NEJM.csv')
 
+# log marginal likelihood comparison
+pdf("plots/nejm-lml-comp.pdf", width = 6, height = 6)
+
 bfindep_dat <- sapply(seq(1, 5, length.out = 1), function(a) {
   c(lml1_IB(dat$y1, dat$y2, dat$n1, dat$n2, a, a))
 })
@@ -59,10 +62,14 @@ points(bfdir_dat, pch = 17, cex = 1.2, col = cols[3])
 legend("topleft",
        col = cols[c(1,2,3)],
        pch = c(18,20, 17),
-       legend = c("IB", "LT", "GD"),
+       legend = c("IB", "LT", "BREASE"),
        horiz = T, bty = "n",
        cex= cex.main)
 
+dev.off()
+
+# bayes factor comparison
+pdf("plots/nejm-bf-comp.pdf", width = 6, height = 6)
 
 bfindep_dat <- sapply(seq(1, 5, length.out = 100), function(a) {
   get_bfindep_anal(dat$y1, dat$y2, dat$n1, dat$n2, a, a)
@@ -182,7 +189,9 @@ text(31.75, 200 - off, '1', cex = cexx)
 text(38.75, 200 - off, '2', cex = cexx)
 
 ydir <- exp(log(200-off)- (log(200) - log(200-off)))
-text(29.5, ydir, 'GD', cex = cexx)
+text(28.25, ydir, 'BREASE', cex = cexx)
 points(points_x, rep(ydir, 100), pch = 17, cex = 1.4, col = cols_dir)
 text(31.7,  ydir, '.2', cex = cexx)
 text(38.75, ydir, '.7', cex = cexx)
+
+dev.off()
